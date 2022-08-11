@@ -1,59 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HLS Demo</title>
+    <link rel="stylesheet" href="https://cdn.plyr.io/1.8.2/plyr.css">
+  </head>
+  <body>
+    <video preload="none" id="player" autoplay controls crossorigin></video>
+    <script src="https://cdn.plyr.io/1.8.2/plyr.js"></script>
+    <script src="https://cdn.jsdelivr.net/hls.js/latest/hls.js"></script>
+    <script src="player2.js"></script>
+    <script>
+      (
+  function () {
+  var video = document.querySelector('#player');
 
-
-<head>
-  <script type="text/javascript" src="https://darya.stream/livetvs/clappr.min.js"></script>
-</head>
-
-<style>
-body{
- margin:0;
-}
-
-#player{
-margin:0;
-  position: relative;
-} 
-
-#audio{
-  text-align: center;
-  position: absolute;
-  bottom:18px;
-  height: 13%;
-  width:100%;
-  background-color:yellow;
-}
-</style>
-
-<body>
-	
+  if (Hls.isSupported()) {
+    var hls = new Hls();
+    hls.loadSource('https://raw.githubusercontent.com/taodicakhia/IPTV_Exception/master/channels/af/tolotv.m3u8');
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED,function() {
+      video.play();
+    });
+  }
   
-    <div id="player">
-	   
-    </div>
-	<div id="audio" >
-		<b><p style="margin:0"> Audio (ØµØ¯Ø§):</p> </b>
-       </div>
-	
-
-  
-  
-  
-  <script>
-    var player = new Clappr.Player({source: "https://fflivetolotv.b-cdn.net/media_1.m3u8",
-	
-    poster: 'https://darya.stream/wp-content/uploads/2020/04/poster-livetvs.jpg',
-    width: "100%", 
-    height: "100%", 
-    autoPlay: true,
-    watermark: "http://darya.stream/wp-content/uploads/2020/04/daryastream-logo.png", position: 'top-left',
-    parentId: "#player"});
-  </script>
-  
-   <script>
-    var player = new Clappr.Player({source: "https://fflivetolotv.b-cdn.net/media_3.m3u8",
-    autoPlay: true,
-	width: "100%", 
-    height: "100%", 
-    parentId: "#audio"});
-  </script>
-</body>
+  plyr.setup(video);
+})();
+    </script>
+  </body>
+</html>
