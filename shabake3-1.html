@@ -7,73 +7,115 @@
   </head>
 
 <style>
-html,
-body,
-#container {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #000;
-    color: #fff;
-    overflow: hidden;
-}
-#myElement {
-    height: 100vh !important;
-}
-body {
-    height: 100vh;
-}
-#container {
-    position: absolute;
-    text-align: center
-}
-
-video {
-    outline: 0
-}
-
-.jw-svg-icon-watermark {
-  color: #ff0046;
-  width: 96px;
-  display: none;
-}
-
-.jw-flag-small-player .jw-controlbar .jw-svg-icon-jwplayer-logo {
-  display: none;
-}
+.tabs{
+    font-family:'Poppins',sans-serif;
+    display:flex;
+    align-items:center;
+    flex-direction:column;
+    width:100%;
+    min-height:100vh;
+  }
+  .sidebar{
+     display:flex;
+     align-items:center;
+     justify-content:center;
+     width:100%;
+  }
+  .tab-btn{
+    background-color:#fff;
+    border:none;
+    border-bottom:1px solid gray;
+    color:#000;
+    cursor:pointer;
+    padding:10px 0;
+    margin:10px 0;
+    outline:none;
+    width:15%;
+  }
+  .tab-btn-active{
+    border-bottom:2px solid hsl(0, 94%, 66%);
+    color:hsl(0, 94%, 66%);
+    font-weight:bold;
+  }
+  /* tabs content */
+  .content{
+    width:100%;
+  }
+  .tab-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    width:100%;
+    height:100vh;
+    position:absolute;
+    top:7rem;
+    display: none;
+  }
+  .tab-content-active{
+    display:block;
+  }
+  .tab-content img{
+    width:350px;
+  }
+ 
 </style>
 
   <body>
-  <div class='video'>
-  <script src="https://use.fontawesome.com/20603b964f.js"></script>
-  <script type="text/javascript" src="https://content.jwplatform.com/libraries/LJ361JYj.js"></script>
-  <script type="text/javascript">
-    jwplayer.key = 'ypdL3Acgwp4Uh2/LDE9dYh3W/EPwDMuA2yid4ytssfI=';
-    // jwplayer.key = 'ITWMv7t88JGzI0xPwW8I0+LveiXX9SWbfdmt0ArUSyc=';
-  </script>
-  <div id="myElement"></div>
-  <script type="text/javascript">
-    jwplayer("myElement").setup({
-      image: "",
-      //aspectratio: "16:9",
-      // width: '100%',
-      height: window.innerHeight,
-      autostart: false,
-      file : 'https://af.ayas.ir/hls2/ayassport1.m3u8',
-      title: 'IRIB 3 tv live',
-      description: 'Darya.stream',
-      aboutlink: 'https://www.jwplayer.com/',
-      tracks:[{"file":"<?php echo $cc; ?>","label":"Indonesia","kind":"captions","default":"true"}],
-      captions: {color: '#ffb800',fontSize: 30,backgroundOpacity: 0},
-      sharing: {
-        sites: ['facebook','twitter','tumblr','googleplus',{icon: '//support-static.jwplayer.com/images/awesome.svg', src: 'http://www.jwplayer.com/?', label:'jwplayer'}],
-        code: encodeURI("<iframe src='<?php echo $sharing;?>' width='480' height='320'></iframe>"),
-        link: "<?php echo $sharing;?>"
-      }
-    })
-  </script>
+  <div class="tabs">
+  <div class="sidebar">
+    <!-- tabs buttons  -->
+    <button class="tab-btn tab-btn-active" data-for-tab="1">Link 1</button>
+    <button class="tab-btn" data-for-tab="2">Link 2</button>
+    <button class="tab-btn" data-for-tab="3">Link 3</button>
+  </div>
+  <!-- tabs content  -->
+  <div class="content">
+
+    <div class="tab-content tab-content-active" data-tab="1">
+      <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://free.okeezy.com/tvs/shabake3-1.html" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe></div>
+    </div>
+
+    <div class="tab-content" data-tab="2">
+      <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://free.okeezy.com/tvs/shabake3-1.html" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe></div>
+    </div>
+    <div class="tab-content" data-tab="3">
+      <div style="left: 0; width: 100%; height: 0; position: relative; padding-bottom: 56.25%;"><iframe src="https://free.okeezy.com/tvs/shabake3-1.html" style="top: 0; left: 0; width: 100%; height: 100%; position: absolute; border: 0;" allowfullscreen scrolling="no" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture;"></iframe></div>
+    </div>
+  </div>
 </div>
+
+<script>
+
+function setupTabs (){
+  document.querySelectorAll('.tab-btn').forEach(button=>{
+    button.addEventListener('click',()=>{
+      
+      
+      const sidebar = button.parentElement;
+      const tabs = sidebar.parentElement;
+      const tabNumber = button.dataset.forTab;
+      const tabActivate = tabs.querySelector(`.tab-content[data-tab="${tabNumber}"]`)
+      
+      sidebar.querySelectorAll('.tab-btn').forEach(button=>{
+        button.classList.remove('tab-btn-active')
+      })
+       tabs.querySelectorAll('.tab-content').forEach(tab=>{
+        tab.classList.remove('tab-content-active')
+      })
+      button.classList.add('tab-btn-active')
+      tabActivate.classList.add('tab-content-active')
+    })
+  })
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  setupTabs();
+})
+
+
+</script>
   </body>
 </html>
 
